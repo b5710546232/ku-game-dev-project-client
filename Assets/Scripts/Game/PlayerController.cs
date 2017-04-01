@@ -58,5 +58,13 @@ public class PlayerController : MonoBehaviour
 	{
 		gameObject.transform.Translate(direction*speed  * Time.deltaTime);
 	}
-	
+
+	void OnTriggerEnter2D(Collider2D col){
+		GameObject hitObj = col.gameObject;
+
+		if(hitObj.GetComponent<Bullet>()){
+			Debug.Log("HIT");
+		}
+			
+	}
 }
