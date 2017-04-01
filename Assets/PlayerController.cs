@@ -2,15 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+    // Use this for initialization
+    Vector2 moveDirection;
+    public float jumpSpeed;
+    public float speed;
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Controller();
+    }
+    public void Move(Vector2 direction)
+    {
+        gameObject.transform.Translate(direction*speed  * Time.deltaTime);
+    }
+
+    void Controller()
+    {
+        moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		PlayerFlip();
+		Move(moveDirection);
+        // if (Input.GetButton("Jump"))
+    }
+	void PlayerFlip(){
+		 if (Input.GetAxis("Horizontal") < -0.1f)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            if (Input.GetAxis("Horizontal") > 0.1f)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
 	}
 }
