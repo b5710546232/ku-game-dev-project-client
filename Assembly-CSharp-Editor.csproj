@@ -50,6 +50,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\VSCode\Plugins\Editor\VSCode.cs" />
+     <None Include="Assets\Plugins\Control-Freak-2\Samples\Demo-CFR\CFR-Demo-Installation-Guide.txt" />
+     <None Include="Assets\Plugins\Control-Freak-2\Shaders\Sprites-SoftLight.shader" />
+     <None Include="Assets\Plugins\Control-Freak-2\Control-Freak-2-ReadMe.txt" />
+     <None Include="Assets\Plugins\Control-Freak-2\Shaders\Sprites-Additive.shader" />
+     <None Include="Assets\Plugins\Control-Freak-2\Samples\Shared-Assets\Fonts\FH-RedFive WTT\license.txt" />
+     <None Include="Assets\Plugins\Control-Freak-2\Shaders\Sprites-HardLight.shader" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
