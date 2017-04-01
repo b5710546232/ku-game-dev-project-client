@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     Vector2 moveDirection;
     public float jumpSpeed;
     public float speed;
+	public GameObject bullet;
+	public float bulletSpeed;
+
     void Start()
     {
 
@@ -18,12 +21,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Controller();
-    }
-    public void Move(Vector2 direction)
-    {
-        gameObject.transform.Translate(direction*speed  * Time.deltaTime);
+		ShootTarget ();
     }
 
+	void ShootTarget(){
+		if (Input.GetMouseButtonDown (0)) {
+			Vector2 target = Camera.main.ScreenToWorldPoint (new Vector2 (Input.mousePosition.x, Input.mousePosition.y));
+			Vector2 curPos = new Vector2 (transform.position.x, transform.position.y);
+			Vector2 dirention = target - curPos;
+			dirention.Normalize ();
+			Quaternion bulletRotation = Quaternion.Euler (0, 0, Mathf.Atan2 (dirention.y, dirention.x) * Mathf.Rad2Deg + 180);
+			GameObject shootingBullet = (GameObject)Instantiate (bullet, curPos, bulletRotation);
+			shootingBullet.GetComponent<Rigidbody2D> ().velocity = dirention * bulletSpeed;
+			
+		}
+	}
     void Controller()
     {
         moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -40,5 +52,11 @@ public class PlayerController : MonoBehaviour
             {
                 transform.localScale = new Vector3(1, 1, 1);
             }
+		
 	}
+	public void Move(Vector2 direction)
+	{
+		gameObject.transform.Translate(direction*speed  * Time.deltaTime);
+	}
+	
 }
