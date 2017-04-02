@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Move(Vector2 direction)
     {
-        gameObject.transform.Translate(direction*speed  * Time.deltaTime);
+        gameObject.transform.Translate(direction.normalized*speed  * Time.deltaTime);
     }
 
     void Controller()
@@ -34,11 +34,11 @@ public class PlayerController : MonoBehaviour
 	void PlayerFlip(){
 		 if (Input.GetAxis("Horizontal") < -0.1f)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
             }
             if (Input.GetAxis("Horizontal") > 0.1f)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
             }
 	}
 }

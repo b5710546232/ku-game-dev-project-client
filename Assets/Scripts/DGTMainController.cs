@@ -7,6 +7,10 @@ public class DGTMainController : MonoBehaviour
 	public Text m_chat;
 	public InputField m_inputText;
 
+	private static DGTMainController g_instance;
+
+	private static GameObject gameObjectState;
+
 	void Update ()
 	{
 		DGTRemote.GetInstance ().ProcessEvents (); 
@@ -17,6 +21,15 @@ public class DGTMainController : MonoBehaviour
 	{
 		DontDestroyOnLoad(this);
 		StartCoroutine (ConnectToServer ());
+	}
+
+	public static DGTMainController GetInstance() { 
+		if(g_instance ==null){
+			gameObjectState = new GameObject("DGTMainController");
+			g_instance = gameObjectState.AddComponent<DGTMainController>();
+			DontDestroyOnLoad(gameObjectState);
+		}
+		return g_instance;
 	}
 	
 	public IEnumerator ConnectToServer ()
@@ -44,14 +57,14 @@ public class DGTMainController : MonoBehaviour
 			// send login
 			gamestate.RequestLogin ();
 			gamestate.mainController = this;
-			SceneManager.LoadScene("PlayScene");
+			// SceneManager.LoadScene("PlayScene");
 			
 			
 		} else {
 			yield return new WaitForSeconds (5f);
 			Debug.Log ("Cannot connect");
 		}
-		StartCoroutine(PingTest());
+		// StartCoroutine(PingTest());
 		yield break;
 	}
 	
