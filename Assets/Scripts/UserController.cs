@@ -8,13 +8,22 @@ public class UserController : MonoBehaviour
     // Use this for initialization
     Vector2 moveDirection;
     public float jumpSpeed;
-    private float speed = 5;
+    
+	public float speed = 2f;
 
 	public float position_x;
 	public float position_y;
 
 	private const float FRAME_INTERVAL = 0.05f;
 	public float currentInterval = 0f;
+
+	public bool hasPosition = false;
+	public Vector2 startPosition;
+	public Vector2 serverPosition;
+	private float startTime;
+	private float distance;
+
+	public bool shouldInterpolate = false;
 
 	void Start()
     {
@@ -49,6 +58,10 @@ public class UserController : MonoBehaviour
 //		Debug.Log (string.Format ("h:{0}, v:{1}", h, v));
 		DGTRemote.Instance.RequestInputAxes (h, v);
 
+		if (shouldInterpolate && hasPosition) {
+			Interpolate ();
+		}
+
 //        moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 //        PlayerFlip();
 //        Move(moveDirection);
@@ -71,4 +84,18 @@ public class UserController : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
         }
     }
+
+	public void startInterpolate() {
+		startTime = Time.time;
+		startPosition = gameObject.transform.position;
+		distance = Vector2.Distance (startPosition, serverPosition);
+	}
+
+	private void Interpolate() {
+		if (distance > 0) {
+			float covered = (Time.time - startTime) * speed;
+			float ratio = covered / distance;
+			gameObject.transform.position = Vector2.Lerp (startPosition, serverPosition, ratio);
+		}
+	}
 }

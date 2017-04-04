@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed;
     private float speed = 5;
 
+	public bool hasPosition = false;
+	public Vector2 serverPosition;
 
     public int playerID;
     void Start()
