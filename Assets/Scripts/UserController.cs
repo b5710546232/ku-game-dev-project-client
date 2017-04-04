@@ -13,7 +13,7 @@ public class UserController : MonoBehaviour
 	public float position_x;
 	public float position_y;
 
-	private const float FRAME_INTERVAL = 0.0333f;
+	private const float FRAME_INTERVAL = 0.05f;
 	public float currentInterval = 0f;
 
 	void Start()
