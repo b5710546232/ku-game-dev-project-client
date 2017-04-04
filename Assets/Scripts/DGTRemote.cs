@@ -124,6 +124,11 @@ public class DGTRemote : MonoBehaviour
     {
         _Packet.RequestPing(pingTime);
     }
+    public void RequestMovementPlayer(float x, float y)
+    {
+        _Packet.RequestMovementPlayer(x, y);
+    }
+
 
     public void recvQuestion()
     {
@@ -140,12 +145,50 @@ public class DGTRemote : MonoBehaviour
         Debug.Log("new player" + msg);
 
     }
+
+    public void recvPlayerInfo(int id)
+    {
+        gameManager.owner_id = id;
+
+    }
+
+    public void RecvPlayerDisconnect(int id)
+    {
+        List<string> entry_keys = new List<string>(gameManager.PlayerControllerList.Keys);
+        if (entry_keys.Contains(id.ToString()))
+        {
+            Debug.Log("hello it should destroy");
+            Destroy(gameManager.PlayerControllerList[id.ToString()].gameObject);
+            gameManager.PlayerControllerList.Remove(id.ToString());
+        }
+
+
+
+        // Destroy(gameManager.PlayerControllerList[entry_key].gameObject);
+        // Debug.Log("hello it should destroy");
+        // gameManager.PlayerControllerList.Remove(entry_key);
+        // foreach (string entry_key in entry_keys)
+        // {
+
+        //     if (!players.ContainsKey(int.Parse(entry_key)))
+        //     {
+        //         // Destroy(gameManager.PlayerControllerList[entry_key].gameObject);
+        //         // Debug.Log("hello it should destroy");
+        //         // gameManager.PlayerControllerList.Remove(entry_key);
+        //     }
+        // }
+
+    }
     public void recvAllPlayerInfo(Dictionary<int, ArrayList> players)
     {
         foreach (KeyValuePair<int, ArrayList> entry in players)
         {
             if (gameManager.PlayerControllerList.ContainsKey(entry.Key.ToString()))
             {
+                object[] info = entry.Value.ToArray();
+                float posx = (float)(info[0]);
+                float posy = (float)(info[1]);
+                gameManager.PlayerControllerList[entry.Key.ToString()].gameObject.transform.position = new Vector2(posx, posy);
 
             }
             else
@@ -153,8 +196,16 @@ public class DGTRemote : MonoBehaviour
                 object[] info = entry.Value.ToArray();
                 float posx = (float)(info[0]);
                 float posy = (float)(info[1]);
-                PlayerController p = gameManager.SpawnPlayer(posx, posy);
+                PlayerController p = gameManager.SpawnPlayer(posx, posy).GetComponent<PlayerController>();
                 gameManager.PlayerControllerList.Add(entry.Key.ToString(), p);
+
+
+                if (gameManager.owner_id == entry.Key)
+                {
+                    Debug.LogError(gameManager.owner_id + " : " + entry.Key);
+                    gameManager.InitUserController(p.gameObject);
+                }
+
 
             }
 
@@ -167,9 +218,9 @@ public class DGTRemote : MonoBehaviour
 
             if (!players.ContainsKey(int.Parse(entry_key)))
             {
-                Destroy(gameManager.PlayerControllerList[entry_key].gameObject);
-                Debug.Log("hello it should destroy");
-                gameManager.PlayerControllerList.Remove(entry_key);
+                // Destroy(gameManager.PlayerControllerList[entry_key].gameObject);
+                // Debug.Log("hello it should destroy");
+                // gameManager.PlayerControllerList.Remove(entry_key);
             }
         }
         // foreach(KeyValuePair<string, PlayerController> entry in gameManager.PlayerControllerList){
@@ -182,4 +233,5 @@ public class DGTRemote : MonoBehaviour
 
 
     }
+
 }

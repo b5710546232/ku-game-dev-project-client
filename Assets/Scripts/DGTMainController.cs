@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 public class DGTMainController : MonoBehaviour
 {
 	public Text m_chat;
@@ -19,8 +20,10 @@ public class DGTMainController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		Application.runInBackground = true;
 		DontDestroyOnLoad(this);
 		StartCoroutine (ConnectToServer ());
+		
 	}
 
 	public static DGTMainController GetInstance() { 
@@ -76,6 +79,12 @@ public class DGTMainController : MonoBehaviour
 			i++;
 			yield return new WaitForSeconds(3);
 		}
+	}
+
+
+	void OnApplicationQuit()
+	{
+		DGTRemote.GetInstance ().Disconnect();
 	}
 
 	public void sendChat()

@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
     public bool connected;
 
     public GameObject Player;
+    public GameObject PlayerController;
+
+	public GameObject userController;
+
+	public int owner_id;
     public List<GameObject> players;
 
     private static GameManager g_instance;
@@ -42,14 +47,18 @@ public class GameManager : MonoBehaviour
        
     }
 
-    public PlayerController SpawnPlayer(float posx, float posy)
+    public void InitUserController(GameObject gameobj){
+        gameobj.AddComponent(typeof(UserController));
+    }
+
+    public GameObject SpawnPlayer(float posx, float posy)
     {
 
         if (DGTRemote.GetInstance().Connected())
         {
            GameObject  player = Instantiate(Player,new Vector3(posx,posy,1),Quaternion.identity);
 			count++;
-			return player.GetComponent<PlayerController>();
+			return player;
             
         }
 		return null;
