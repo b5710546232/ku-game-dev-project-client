@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     public DGTMainController dgtMainController;
     public Dictionary<string, PlayerController> PlayerControllerList = new Dictionary<string, PlayerController>();
-    public bool connected;
+	public Dictionary<int, GameObject> players = new Dictionary<int, GameObject> ();
+	public bool connected;
 
     public GameObject Player;
     public GameObject PlayerController;
@@ -17,11 +18,13 @@ public class GameManager : MonoBehaviour
 	public GameObject userController;
 
 	public int owner_id;
-    public List<GameObject> players;
+//    public List<GameObject> players;
 
     private static GameManager g_instance;
     private static GameObject gameObjectState;
 	public static int count;
+
+	public Sprite playerSprite;
 
     public static GameManager GetInstance()
     {
@@ -39,9 +42,8 @@ public class GameManager : MonoBehaviour
         dgtMainController = DGTMainController.GetInstance();
 		DGTRemote gamestate = DGTRemote.GetInstance();
         gamestate = DGTRemote.GetInstance();
-
-
     }
+
     void Start()
     {
        

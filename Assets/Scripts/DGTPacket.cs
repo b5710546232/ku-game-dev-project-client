@@ -23,6 +23,7 @@ class DGTPacket : PacketManager
         CS_ANSWER = 10003,
         CS_CHAT = 10004,
         CS_MOVE_PLAYER = 10005,
+		CS_PLAYERS_INFO = 10006,
 
         SC_LOGGED_IN = 20001,
         SC_PING_SUCCESS = 20002,
@@ -31,8 +32,8 @@ class DGTPacket : PacketManager
         SC_NEW_PLAYER = 20005,
         SC_ALL_PLAYERS_INFO = 20006,
         SC_PLAYER_INFO =20007,
-        SC_PLAYER_DISCONNECT =20008,
-
+//        SC_PLAYER_DISCONNECT =20008,
+		SC_REMOVE_PLAYER = 21001
     }
 
     private DGTRemote _remote;
@@ -68,16 +69,19 @@ class DGTPacket : PacketManager
         _Mapper[(int)PacketId.SC_QUESTION] = RecvQuestion;
         _Mapper[(int)PacketId.SC_CHAT] = RecvChat;
         _Mapper[(int)PacketId.SC_NEW_PLAYER] = RecvNewPlayer;
-        _Mapper[(int)PacketId.SC_ALL_PLAYERS_INFO] = RecvAllPlayersInfo;
+//        _Mapper[(int)PacketId.SC_ALL_PLAYERS_INFO] = RecvAllPlayersInfo;
+		_Mapper[(int)PacketId.SC_ALL_PLAYERS_INFO] = RecvPlayersInfo;
         _Mapper[(int)PacketId.SC_PLAYER_INFO] = RecvPlayerInfo;
-        _Mapper[(int)PacketId.SC_PLAYER_DISCONNECT] = RecvPlayerDisconnect;
+//        _Mapper[(int)PacketId.SC_PLAYER_DISCONNECT] = RecvPlayerDisconnect;
+		_Mapper[(int)PacketId.SC_REMOVE_PLAYER] = RecvRemovePlayer;
     }
     #endregion
 
     #region send to server
     public void RequestLogin()
     {
-        PacketWriter pw = BeginSend((int)PacketId.CS_LOGIN);
+//        PacketWriter pw = 
+		BeginSend((int)PacketId.CS_LOGIN);
         EndSend();
     }
 
@@ -91,7 +95,8 @@ class DGTPacket : PacketManager
     public void RequestAnswer()
     {
         Debug.Log("RequestAnswer");
-        PacketWriter pw = BeginSend((int)PacketId.CS_ANSWER);
+//        PacketWriter pw = 
+		BeginSend((int)PacketId.CS_ANSWER);
         EndSend();
     }
 
@@ -109,20 +114,39 @@ class DGTPacket : PacketManager
     {
         PacketWriter pw = BeginSend((int)PacketId.CS_MOVE_PLAYER);
         // Debug.Log("write"+x+y);
-        x = (float)(double)(x);
-        y = (float)(double)(y);
+//        x = (float)(double)(x);
+//        y = (float)(double)(y);
         pw.WriteFloat(x);
         pw.WriteFloat(y);
 
         EndSend();
 
     }
+
+	public void RequestInputAxes(float h, float v)
+	{
+		PacketWriter pw = BeginSend((int)PacketId.CS_MOVE_PLAYER);
+		pw.WriteFloat(h);
+		pw.WriteFloat(v);
+
+		EndSend();
+	}
+
+	public void RequestPlayersInfo()
+	{
+		BeginSend ((int)PacketId.CS_PLAYERS_INFO);
+		EndSend ();
+	}
+
     #endregion
 
     #region receive from server	
     private void RecvLogin(int packet_id, PacketReader pr)
     {
-        Debug.Log("RecvLogin()");
+		int id = pr.ReadUInt8 ();
+		Debug.Log("Login succesfully, got id: " + id);
+		DGTRemote.Instance.RecvPlayerInfo (id);
+
     }
 
     private void RecvPingSuccess(int packet_id, PacketReader pr)
@@ -167,9 +191,10 @@ class DGTPacket : PacketManager
         // Debug.Log("PlayerLenght"+playerLength);
         for(int i = 0;i<playerLength;i++){
             int id = pr.ReadUInt32();
-            float POSX = float.Parse(pr.ReadString());
-            float POSY = float.Parse(pr.ReadString());
-            
+//            float POSX = float.Parse(pr.ReadString());
+//            float POSY = float.Parse(pr.ReadString());
+			float POSX = pr.ReadFloat();
+			float POSY = pr.ReadFloat ();
             
             ArrayList info = new ArrayList();
             info.Add(POSX);
@@ -185,11 +210,36 @@ class DGTPacket : PacketManager
         
         
     }
+
+	private void RecvPlayersInfo(int packet_id, PacketReader pr)
+	{
+		int amount = pr.ReadUInt8 ();
+		Dictionary<int, ArrayList> playersInfo = new Dictionary<int, ArrayList> ();
+		for (int i = 0; i < amount; i++) {
+			int id = pr.ReadUInt8 ();
+			float x = pr.ReadFloat ();
+			float y = pr.ReadFloat ();
+
+			ArrayList info = new ArrayList ();
+			info.Add (x);
+			info.Add (y);
+
+			playersInfo.Add (id, info);
+			DGTRemote.Instance.RecvPlayersInfo (playersInfo);
+		}
+	}
+
     private void RecvPlayerDisconnect(int packet_id, PacketReader pr){
             int playerId = pr.ReadUInt32();
             DGTRemote.Instance.RecvPlayerDisconnect(playerId);
     }
     
+	private void RecvRemovePlayer(int packet_id, PacketReader pr)
+	{
+		int id = pr.ReadInt8 ();
+		DGTRemote.Instance.RecvRemovePlayer (id);
+	}
+
     #endregion
 
 

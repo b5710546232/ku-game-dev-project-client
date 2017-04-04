@@ -12,7 +12,11 @@ public class UserController : MonoBehaviour
 
 	public float position_x;
 	public float position_y;
-    void Start()
+
+	private const float FRAME_INTERVAL = 0.0333f;
+	public float currentInterval = 0f;
+
+	void Start()
     {
 
     }
@@ -20,9 +24,15 @@ public class UserController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Controller();
-		UpdatePosition();
-		
+//        Controller();
+//		UpdatePosition();
+		Controller ();
+		if(currentInterval >= FRAME_INTERVAL) {
+			DGTRemote.Instance.RequestPlayersInfo ();
+			currentInterval = 0f;
+		}
+//		currentInterval += ((int)Time.deltaTime * 1000) / 1000f;
+		currentInterval += Time.deltaTime;
     }
 
 	void UpdatePosition(){
@@ -31,17 +41,25 @@ public class UserController : MonoBehaviour
         if (Input.GetAxis("Horizontal") != 0.00f||Input.GetAxis("Vertical") !=0.00f)
 		DGTRemote.GetInstance ().RequestMovementPlayer(position_x,position_y);
 	}
+
     void Controller()
     {
-        moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        PlayerFlip();
-        Move(moveDirection);
+		float h = Input.GetAxis ("Horizontal");
+		float v = Input.GetAxis ("Vertical");
+//		Debug.Log (string.Format ("h:{0}, v:{1}", h, v));
+		DGTRemote.Instance.RequestInputAxes (h, v);
+
+//        moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+//        PlayerFlip();
+//        Move(moveDirection);
         // if (Input.GetButton("Jump"))
     }
+
     public void Move(Vector2 direction)
     {
         gameObject.transform.Translate(direction.normalized * speed * Time.deltaTime);
     }
+
     void PlayerFlip()
     {
         if (Input.GetAxis("Horizontal") < -0.1f)

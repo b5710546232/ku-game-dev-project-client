@@ -102,9 +102,6 @@ public class DGTRemote : MonoBehaviour
 
     void Awake()
     {
-
-
-
         _Packet = new DGTPacket(this);
         _State = State.DISCONNECTED;
         //test();
@@ -129,6 +126,14 @@ public class DGTRemote : MonoBehaviour
         _Packet.RequestMovementPlayer(x, y);
     }
 
+	public void RequestInputAxes(float h, float v) {
+		_Packet.RequestInputAxes (h, v);
+	}
+
+	public void RequestPlayersInfo()
+	{
+		_Packet.RequestPlayersInfo ();
+	}
 
     public void recvQuestion()
     {
@@ -151,6 +156,11 @@ public class DGTRemote : MonoBehaviour
         gameManager.owner_id = id;
 
     }
+
+	public void RecvPlayerInfo (int id)
+	{
+		gameManager.owner_id = id;
+	}
 
     public void RecvPlayerDisconnect(int id)
     {
@@ -231,7 +241,45 @@ public class DGTRemote : MonoBehaviour
         // 	}
         // }
 
-
     }
+
+	public void RecvPlayersInfo(Dictionary<int, ArrayList> playersInfo)
+	{
+		GameObject player;
+		foreach (KeyValuePair<int, ArrayList> playerInfo in playersInfo) {
+			if (gameManager.players.ContainsKey (playerInfo.Key)) {
+				player = gameManager.players [playerInfo.Key];
+			} else {
+				player = new GameObject ();
+				if (gameManager.owner_id == playerInfo.Key) {
+					player.name = "Client player#" + gameManager.owner_id.ToString();
+					player.AddComponent<UserController> ();
+				} else {
+					player.name = "Other player#" + playerInfo.Key.ToString();
+					player.AddComponent<PlayerController> ();
+				}
+				SpriteRenderer sr = player.AddComponent<SpriteRenderer> ();
+				sr.sprite = gameManager.playerSprite;
+				gameManager.players.Add (playerInfo.Key, player);
+			}
+			Vector2 position = new Vector2 ((float)playerInfo.Value [0], (float)playerInfo.Value [1]);
+			Debug.Log (string.Format ("Update position of #{0} from {1},{2} to {3},{4}"
+				,playerInfo.Key,player.transform.position.x,player.transform.position.y,position.x, position.y));
+			player.transform.position = position;
+		}
+	}
+
+	public void RecvRemovePlayer(int id) {
+//		string _id = id.ToString ();
+//		PlayerController otherPlayer;
+//		GameManager.GetInstance ().PlayerControllerList.TryGetValue (_id, out otherPlayer);
+		GameObject otherPlayer;
+		gameManager.players.TryGetValue (id, out otherPlayer);
+		if (otherPlayer != null) {
+			Debug.Log ("Bye bye player#" + id);
+			Destroy (otherPlayer);
+		}
+	}
+
 
 }
