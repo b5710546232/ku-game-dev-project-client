@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\GameController.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\DGTMainController.cs" />
      <Compile Include="Assets\Scripts\DGTPacket.cs" />
@@ -59,6 +60,7 @@
      <Compile Include="Assets\Scripts\omg\PacketManager.cs" />
      <Compile Include="Assets\Scripts\omg\PacketReader.cs" />
      <Compile Include="Assets\Scripts\omg\PacketWriter.cs" />
+     <Compile Include="Assets\Weapon.cs" />
      <None Include="Assets\Plugins\Control-Freak-2\Samples\Demo-CFR\CFR-Demo-Installation-Guide.txt" />
      <None Include="Assets\Plugins\Control-Freak-2\Shaders\Sprites-SoftLight.shader" />
      <None Include="Assets\Plugins\Control-Freak-2\Control-Freak-2-ReadMe.txt" />
