@@ -26,10 +26,15 @@ public class GameManager : MonoBehaviour
 	public static int count;
 
 	// Explicitly chosen player's sprite
-	public Sprite playerSprite;
+//	public Sprite playerSprite;
+	// Explicitly chose player's prefab
+	public GameObject playerPrefab;
 
 	// Explicitly chosen gun's sprite
-	public Sprite gunSprite;
+//	public Sprite gunSprite;
+
+	// Explicity chose bullet's prefab
+	public GameObject bulletPrefab;
 
     public static GameManager GetInstance()
     {

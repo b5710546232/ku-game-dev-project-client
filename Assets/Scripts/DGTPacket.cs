@@ -25,6 +25,9 @@ class DGTPacket : PacketManager
         CS_MOVE_PLAYER = 10005,
 		CS_PLAYERS_INFO = 10006,
 
+		CS_BULLET_INFO = 11002,
+
+
         SC_LOGGED_IN = 20001,
         SC_PING_SUCCESS = 20002,
         SC_QUESTION = 20003,
@@ -33,7 +36,8 @@ class DGTPacket : PacketManager
         SC_ALL_PLAYERS_INFO = 20006,
         SC_PLAYER_INFO =20007,
 //        SC_PLAYER_DISCONNECT =20008,
-		SC_REMOVE_PLAYER = 21001
+		SC_REMOVE_PLAYER = 21001,
+		SC_BULLET_INFO = 21002
     }
 
     private DGTRemote _remote;
@@ -74,6 +78,7 @@ class DGTPacket : PacketManager
         _Mapper[(int)PacketId.SC_PLAYER_INFO] = RecvPlayerInfo;
 //        _Mapper[(int)PacketId.SC_PLAYER_DISCONNECT] = RecvPlayerDisconnect;
 		_Mapper[(int)PacketId.SC_REMOVE_PLAYER] = RecvRemovePlayer;
+		_Mapper [(int)PacketId.SC_BULLET_INFO] = RecvBulletInfo;
     }
     #endregion
 
@@ -135,6 +140,15 @@ class DGTPacket : PacketManager
 	public void RequestPlayersInfo()
 	{
 		BeginSend ((int)PacketId.CS_PLAYERS_INFO);
+		EndSend ();
+	}
+
+	public void RequestSendBulletInfo(Vector2 bulletDirection, Quaternion bulletRotation)
+	{
+		PacketWriter pw = BeginSend ((int)PacketId.CS_BULLET_INFO);
+		pw.WriteFloat (bulletDirection.x);
+		pw.WriteFloat (bulletDirection.y);
+		pw.WriteFloat (bulletRotation.z);
 		EndSend ();
 	}
 
@@ -238,6 +252,15 @@ class DGTPacket : PacketManager
 	{
 		int id = pr.ReadInt8 ();
 		DGTRemote.Instance.RecvRemovePlayer (id);
+	}
+
+	private void RecvBulletInfo(int packet_id, PacketReader pr)
+	{
+		int id = pr.ReadInt8 ();
+		float x_direction = pr.ReadFloat ();
+		float y_direction = pr.ReadFloat ();
+//		float z_quaternion_euler = pr.ReadFloat ();
+		DGTRemote.Instance.RecvBulletInfo(id, new Vector2(x_direction, y_direction));
 	}
 
     #endregion

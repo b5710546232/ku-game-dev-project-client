@@ -135,6 +135,11 @@ public class DGTRemote : MonoBehaviour
 		_Packet.RequestPlayersInfo ();
 	}
 
+	public void RequestSendBulletInfo(Vector2 bulletDirection, Quaternion bulletRotation)
+	{
+		_Packet.RequestSendBulletInfo (bulletDirection, bulletRotation);
+	}
+
     public void recvQuestion()
     {
         _Packet.RequestAnswer();
@@ -266,8 +271,10 @@ public class DGTRemote : MonoBehaviour
 					//pc.startInterpolate();
 				}
 			} else {
-				player = new GameObject ();
+//				player = new GameObject ();
+				player = Instantiate (gameManager.playerPrefab);
 				if (gameManager.owner_id == playerInfo.Key) {
+					player.GetComponentInChildren<GunController> ().isClient = true;
 					player.name = "Client player#" + gameManager.owner_id.ToString();
 					UserController uc = player.AddComponent<UserController> ();
 					uc.serverPosition = position;
@@ -279,8 +286,8 @@ public class DGTRemote : MonoBehaviour
 					shouldInterpolate = pc.shouldInterpolate;
 				}
 				player.transform.position = position;
-				SpriteRenderer sr = player.AddComponent<SpriteRenderer> ();
-				sr.sprite = gameManager.playerSprite;
+//				SpriteRenderer sr = player.AddComponent<SpriteRenderer> ();
+//				sr.sprite = gameManager.playerSprite;
 				gameManager.players.Add (playerInfo.Key, player);
 			}
 			if (!shouldInterpolate) {
@@ -305,5 +312,21 @@ public class DGTRemote : MonoBehaviour
 		}
 	}
 
+	public void RecvBulletInfo(int id, Vector2 direction)
+	{
+		if (gameManager.players.ContainsKey (id)) {
+			Debug.Log (string.Format ("Player#{0} shot a bullet", id));
+			GameObject player = gameManager.players [id];
+			GunController gunCtrl = player.GetComponentInChildren<GunController> ();
+			GameObject bulletHole = gunCtrl.bulletHole;
+
+			Quaternion bulletRotation = Quaternion.Euler (0, 0, Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg + 180);
+			//Make a bullet or take from bullet pool
+			//Should take a bullet from client's pool
+			GameObject bullet = Instantiate(gameManager.bulletPrefab, bulletHole.transform.position, bulletRotation);
+			bullet.GetComponent<BulletController> ().id = id;
+			bullet.GetComponent<Rigidbody2D> ().velocity = direction * gunCtrl.bulletSpeed;
+		}
+	}
 
 }

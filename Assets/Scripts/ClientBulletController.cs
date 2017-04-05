@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunController : MonoBehaviour {
+public class ClientBulletController : BulletController {
 
 	public GameObject bulletHole;
 	public GameObject bulletPrefab;
@@ -14,20 +14,17 @@ public class GunController : MonoBehaviour {
 	private static Vector3 positiveScale = new Vector3 (1, 1, 1);
 	private static Vector3 negativeScale = new Vector3 (-1, 1, 1);
 
-	public bool isClient = false;
-
 	// Use this for initialization
-//	void Start () {}
+	void Start () {
+		
+	}
 	
-	// Update is called once per frame
 	void Update () {
-		if (isClient) {
-			TurnGun ();
-			if (currentInterval >= shootInterval) {
-				Shoot ();
-			}
-			currentInterval += Time.deltaTime;
+		TurnGun ();
+		if (currentInterval >= shootInterval) {
+			Shoot ();
 		}
+		currentInterval += Time.deltaTime;
 	}
 
 	private void Shoot() {
@@ -37,14 +34,14 @@ public class GunController : MonoBehaviour {
 			direction.Normalize ();
 			Quaternion bulletRotation = Quaternion.Euler (0, 0, Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg + 180);
 			SendBulletInfo (direction, bulletRotation);
-//			GameObject bullet = Instantiate (bulletPrefab, bulletHole.transform.position, bulletRotation);
-//			bullet.GetComponent<Rigidbody2D> ().velocity = direction * bulletSpeed;
+			//			GameObject bullet = Instantiate (bulletPrefab, bulletHole.transform.position, bulletRotation);
+			//			bullet.GetComponent<Rigidbody2D> ().velocity = direction * bulletSpeed;
 			currentInterval = 0f;
 		}
 	}
 
 	private void TurnGun() {
-//		Vector2 mouseScreenPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) ;
+		//		Vector2 mouseScreenPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) ;
 		Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint (transform.position);
 		float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
@@ -55,12 +52,12 @@ public class GunController : MonoBehaviour {
 	private void Flip() {
 		if (Input.GetAxis("Horizontal") < -0.1f)
 		{
-//			this.GetComponent<SpriteRenderer> ().flipY = true;
+			//			this.GetComponent<SpriteRenderer> ().flipY = true;
 			transform.localScale = negativeScale;
 		}
 		if (Input.GetAxis("Horizontal") > 0.1f)
 		{
-//			this.GetComponent<SpriteRenderer> ().flipY = false;
+			//			this.GetComponent<SpriteRenderer> ().flipY = false;
 			transform.localScale = positiveScale;
 		}
 	}

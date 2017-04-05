@@ -25,6 +25,9 @@ public class UserController : MonoBehaviour
 
 	public bool shouldInterpolate = true;
 
+	private static Vector3 positiveScale = new Vector3 (2, 2, 1);
+	private static Vector3 negativeScale = new Vector3 (-2, 2, 1);
+
 	void Start()
     {
 
@@ -56,6 +59,7 @@ public class UserController : MonoBehaviour
 		float h = Input.GetAxis ("Horizontal");
 		float v = Input.GetAxis ("Vertical");
 //		Debug.Log (string.Format ("h:{0}, v:{1}", h, v));
+		Flip();
 		DGTRemote.Instance.RequestInputAxes (h, v);
 
 		if (shouldInterpolate && hasPosition) {
@@ -84,6 +88,18 @@ public class UserController : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
         }
     }
+
+	private void Flip()
+	{
+		if (Input.GetAxis("Horizontal") < -0.1f)
+		{
+			transform.localScale = negativeScale;
+		}
+		if (Input.GetAxis("Horizontal") > 0.1f)
+		{
+			transform.localScale = positiveScale;
+		}
+	}
 
 	public void startInterpolate() {
 		startTime = Time.time;
