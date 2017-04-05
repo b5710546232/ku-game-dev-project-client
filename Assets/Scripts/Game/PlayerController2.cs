@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController2 : MonoBehaviour
 {
 
     // Use this for initialization
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-		shooter = transform.parent.gameObject;
+		//shooter = transform.parent.gameObject;
     }
 
     // Update is called once per frame
