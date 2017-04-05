@@ -9,12 +9,12 @@ public class UserController : MonoBehaviour
     Vector2 moveDirection;
     public float jumpSpeed;
     
-	public float speed = 2f;
+	public float speed = 3f;
 
 	public float position_x;
 	public float position_y;
 
-	private const float FRAME_INTERVAL = 0.05f;
+	private const float FRAME_INTERVAL = 0.1f;
 	public float currentInterval = 0f;
 
 	public bool hasPosition = false;
@@ -23,7 +23,7 @@ public class UserController : MonoBehaviour
 	private float startTime;
 	private float distance;
 
-	public bool shouldInterpolate = false;
+	public bool shouldInterpolate = true;
 
 	void Start()
     {

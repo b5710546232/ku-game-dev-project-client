@@ -261,6 +261,8 @@ public class DGTRemote : MonoBehaviour
 					PlayerController pc = player.GetComponent<PlayerController> ();
 					pc.serverPosition = position;
 					pc.hasPosition = true;
+					shouldInterpolate = pc.shouldInterpolate;
+					pc.startInterpolate ();
 					//pc.startInterpolate();
 				}
 			} else {
@@ -274,6 +276,7 @@ public class DGTRemote : MonoBehaviour
 					player.name = "Other player#" + playerInfo.Key.ToString();
 					PlayerController pc = player.AddComponent<PlayerController> ();
 					pc.serverPosition = position;
+					shouldInterpolate = pc.shouldInterpolate;
 				}
 				player.transform.position = position;
 				SpriteRenderer sr = player.AddComponent<SpriteRenderer> ();

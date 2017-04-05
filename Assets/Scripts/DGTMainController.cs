@@ -37,7 +37,9 @@ public class DGTMainController : MonoBehaviour
 	
 	public IEnumerator ConnectToServer ()
 	{
-		DGTPacket.Config pc = new DGTPacket.Config ("localhost", 3456);
+		string host = "139.59.127.218";
+		int port = 3456;
+		DGTPacket.Config pc = new DGTPacket.Config (host, port);
 		DGTRemote.resetGameState ();
 		DGTRemote gamestate = DGTRemote.GetInstance ();
 		gamestate.Connect (pc.host, pc.port);
