@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\DGTPacket.cs" />
      <Compile Include="Assets\Scripts\DGTRemote.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\GunController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\UserController.cs" />
      <Compile Include="Assets\Scripts\omg\PacketConnection.cs" />

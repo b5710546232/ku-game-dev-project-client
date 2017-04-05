@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
-
     // Use this for initialization
-    public DGTMainController dgtMainController;
+	public DGTMainController dgtMainController;
     public Dictionary<string, PlayerController> PlayerControllerList = new Dictionary<string, PlayerController>();
+
+	// Dictionary containing all of the players
 	public Dictionary<int, GameObject> players = new Dictionary<int, GameObject> ();
+
 	public bool connected;
 
     public GameObject Player;
@@ -17,14 +18,18 @@ public class GameManager : MonoBehaviour
 
 	public GameObject userController;
 
+	// Id of this game instance which is correspond with its remote on the server
 	public int owner_id;
-//    public List<GameObject> players;
 
     private static GameManager g_instance;
     private static GameObject gameObjectState;
 	public static int count;
 
+	// Explicitly chosen player's sprite
 	public Sprite playerSprite;
+
+	// Explicitly chosen gun's sprite
+	public Sprite gunSprite;
 
     public static GameManager GetInstance()
     {
