@@ -46,11 +46,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\DGTMainController.cs" />
+     <Compile Include="Assets\Scripts\DGTPacket.cs" />
+     <Compile Include="Assets\Scripts\DGTRemote.cs" />
      <Compile Include="Assets\Scripts\Game\Bullet.cs" />
      <Compile Include="Assets\Scripts\Game\MusicManager.cs" />
      <Compile Include="Assets\Scripts\Game\PlayerController2.cs" />
      <Compile Include="Assets\Scripts\Game\Weapon.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\UserController.cs" />
      <Compile Include="Assets\Scripts\UserPreference.cs" />
+     <Compile Include="Assets\Scripts\omg\PacketConnection.cs" />
+     <Compile Include="Assets\Scripts\omg\PacketReader.cs" />
+     <Compile Include="Assets\Scripts\omg\PacketWriter.cs" />
      <None Include="Assets\Plugins\Control-Freak-2\Samples\Demo-CFR\CFR-Demo-Installation-Guide.txt" />
      <None Include="Assets\Plugins\Control-Freak-2\Shaders\Sprites-SoftLight.shader" />
      <None Include="Assets\Plugins\Control-Freak-2\Control-Freak-2-ReadMe.txt" />
