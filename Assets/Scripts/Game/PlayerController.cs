@@ -12,29 +12,36 @@ public class PlayerController : MonoBehaviour
 	public GameObject bullet;
 	public float bulletSpeed;
 
+	public GameObject shooter;
+
+	public float fireRate = 0.2f;
+
     void Start()
     {
-
+		shooter = transform.parent.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
         Controller();
-		ShootTarget ();
+		if (Input.GetMouseButtonDown(0)) {
+			InvokeRepeating ("ShootTarget",0.00001f, fireRate);
+		}
+
+		if (Input.GetMouseButtonUp (0)) {
+			CancelInvoke ("ShootTarget");
+		}
     }
 
 	void ShootTarget(){
-		if (Input.GetMouseButtonDown (0)) {
-			Vector2 target = Camera.main.ScreenToWorldPoint (new Vector2 (Input.mousePosition.x, Input.mousePosition.y));
-			Vector2 curPos = new Vector2 (transform.position.x, transform.position.y);
-			Vector2 dirention = target - curPos;
-			dirention.Normalize ();
-			Quaternion bulletRotation = Quaternion.Euler (0, 0, Mathf.Atan2 (dirention.y, dirention.x) * Mathf.Rad2Deg + 180);
-			GameObject shootingBullet = (GameObject)Instantiate (bullet, curPos, bulletRotation);
-			shootingBullet.GetComponent<Rigidbody2D> ().velocity = dirention * bulletSpeed;
-			
-		}
+		Vector2 target = Camera.main.ScreenToWorldPoint (new Vector2 (Input.mousePosition.x, Input.mousePosition.y));
+		Vector2 curPos = new Vector2 (transform.position.x, transform.position.y);
+		Vector2 dirention = target - curPos;
+		dirention.Normalize ();
+		Quaternion bulletRotation = Quaternion.Euler (0, 0, Mathf.Atan2 (dirention.y, dirention.x) * Mathf.Rad2Deg + 180);
+		GameObject shootingBullet = (GameObject)Instantiate (bullet, curPos, bulletRotation);
+		shootingBullet.GetComponent<Rigidbody2D> ().velocity = dirention * bulletSpeed;
 	}
     void Controller()
     {
