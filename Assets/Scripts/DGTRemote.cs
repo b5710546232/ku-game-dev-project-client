@@ -250,7 +250,6 @@ public class DGTRemote : MonoBehaviour
 
 	public void RecvPlayersInfo(Dictionary<int, ArrayList> playersInfo)
 	{
-		
 		GameObject player;
 		foreach (KeyValuePair<int, ArrayList> playerInfo in playersInfo) {
 			Vector2 position = new Vector2 ((float)playerInfo.Value [0], (float)playerInfo.Value [1]);
