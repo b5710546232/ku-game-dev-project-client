@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Gameovercontrol : MonoBehaviour {
@@ -71,5 +72,12 @@ public class Gameovercontrol : MonoBehaviour {
     public void select()
     {
         Debug.Log(textcollect[0]+" Selected");
+        if (textcollect[0].Equals("Exit")){
+            SceneManager.LoadScene("Manuscene");
+        }
+        if (textcollect[0].Equals("Retry"))
+        {
+            SceneManager.LoadScene("GamOver");
+        }
     }
 }
