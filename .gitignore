@@ -28,3 +28,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Control Freak 2
+/[Cc]F2-Data/
