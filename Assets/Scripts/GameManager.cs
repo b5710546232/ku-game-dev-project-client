@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 	public GameObject userController;
 
 	// Id of this game instance which is correspond with its remote on the server
-	public int owner_id;
+	public int owner_id = -1;
 
     private static GameManager g_instance;
     private static GameObject gameObjectState;

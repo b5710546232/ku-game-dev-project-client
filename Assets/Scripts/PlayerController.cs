@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed;
     private float speed = 5;
 
-	public bool hasPosition = false;
+//	public bool hasPosition = false;
 	public Vector2 startPosition;
 	public Vector2 serverPosition;
 	private float startTime;
@@ -27,9 +27,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (shouldInterpolate && hasPosition) {
-			Interpolate ();
-		}
+//		if (shouldInterpolate && hasPosition) {
+//			Interpolate ();
+//		}
     }
 
 	public void startInterpolate() {

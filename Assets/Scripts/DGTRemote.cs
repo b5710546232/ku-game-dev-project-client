@@ -250,24 +250,25 @@ public class DGTRemote : MonoBehaviour
 
 	public void RecvPlayersInfo(Dictionary<int, ArrayList> playersInfo)
 	{
+		
 		GameObject player;
 		foreach (KeyValuePair<int, ArrayList> playerInfo in playersInfo) {
 			Vector2 position = new Vector2 ((float)playerInfo.Value [0], (float)playerInfo.Value [1]);
-			bool shouldInterpolate = false;
+//			bool shouldInterpolate = false;
 			if (gameManager.players.ContainsKey (playerInfo.Key)) {
 				player = gameManager.players [playerInfo.Key];
 				if (gameManager.owner_id == playerInfo.Key) {
 					UserController uc = player.GetComponent<UserController> ();
 					uc.serverPosition = position;
-					uc.hasPosition = true;
-					shouldInterpolate = uc.shouldInterpolate; 
-					uc.startInterpolate ();
+//					uc.hasPosition = true;
+//					shouldInterpolate = uc.shouldInterpolate; 
+//					uc.startInterpolate ();
 				} else {
 					PlayerController pc = player.GetComponent<PlayerController> ();
 					pc.serverPosition = position;
-					pc.hasPosition = true;
-					shouldInterpolate = pc.shouldInterpolate;
-					pc.startInterpolate ();
+//					pc.hasPosition = true;
+//					shouldInterpolate = pc.shouldInterpolate;
+//					pc.startInterpolate ();
 					//pc.startInterpolate();
 				}
 			} else {
@@ -278,21 +279,22 @@ public class DGTRemote : MonoBehaviour
 					player.name = "Client player#" + gameManager.owner_id.ToString();
 					UserController uc = player.AddComponent<UserController> ();
 					uc.serverPosition = position;
-					shouldInterpolate = uc.shouldInterpolate;
+//					shouldInterpolate = uc.shouldInterpolate;
 				} else {
 					player.name = "Other player#" + playerInfo.Key.ToString();
 					PlayerController pc = player.AddComponent<PlayerController> ();
 					pc.serverPosition = position;
-					shouldInterpolate = pc.shouldInterpolate;
+//					shouldInterpolate = pc.shouldInterpolate;
 				}
-				player.transform.position = position;
 //				SpriteRenderer sr = player.AddComponent<SpriteRenderer> ();
 //				sr.sprite = gameManager.playerSprite;
 				gameManager.players.Add (playerInfo.Key, player);
 			}
-			if (!shouldInterpolate) {
-				player.transform.position = position;
-			}
+			Debug.Log ("Update player's position");
+			player.transform.position = position;
+//			if (!shouldInterpolate) {
+//				player.transform.position = position;
+//			}
 //			Debug.Log (string.Format ("Update position of #{0} from {1},{2} to {3},{4}"
 //				,playerInfo.Key,player.transform.position.x,player.transform.position.y,position.x, position.y));
 //			player.transform.position = position;

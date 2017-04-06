@@ -160,7 +160,6 @@ class DGTPacket : PacketManager
 		int id = pr.ReadUInt8 ();
 		Debug.Log("Login succesfully, got id: " + id);
 		DGTRemote.Instance.RecvPlayerInfo (id);
-
     }
 
     private void RecvPingSuccess(int packet_id, PacketReader pr)
@@ -233,6 +232,8 @@ class DGTPacket : PacketManager
 			int id = pr.ReadUInt8 ();
 			float x = pr.ReadFloat ();
 			float y = pr.ReadFloat ();
+
+			Debug.Log (string.Format ("Id#{0} X#{1}, Y{2}", id, x, y));
 
 			ArrayList info = new ArrayList ();
 			info.Add (x);

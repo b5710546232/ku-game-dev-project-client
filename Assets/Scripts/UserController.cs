@@ -17,7 +17,7 @@ public class UserController : MonoBehaviour
 	private const float FRAME_INTERVAL = 0.025f;
 	public float currentInterval = 0f;
 
-	public bool hasPosition = false;
+//	public bool hasPosition = false;
 	public Vector2 startPosition;
 	public Vector2 serverPosition;
 	private float startTime;
@@ -38,9 +38,9 @@ public class UserController : MonoBehaviour
     {
 //        Controller();
 //		UpdatePosition();
-		Controller ();
 		if(currentInterval >= FRAME_INTERVAL) {
-			DGTRemote.Instance.RequestPlayersInfo ();
+//			DGTRemote.Instance.RequestPlayersInfo ();
+			Controller ();	
 			currentInterval = 0f;
 		}
 //		currentInterval += ((int)Time.deltaTime * 1000) / 1000f;
@@ -62,9 +62,9 @@ public class UserController : MonoBehaviour
 		Flip();
 		DGTRemote.Instance.RequestInputAxes (h, v);
 
-		if (shouldInterpolate && hasPosition) {
-			Interpolate ();
-		}
+//		if (shouldInterpolate && hasPosition) {
+//			Interpolate ();
+//		}
 
 //        moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 //        PlayerFlip();
