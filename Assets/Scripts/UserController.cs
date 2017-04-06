@@ -14,7 +14,7 @@ public class UserController : MonoBehaviour
 	public float position_x;
 	public float position_y;
 
-	private const float FRAME_INTERVAL = 0.1f;
+	private const float FRAME_INTERVAL = 0.025f;
 	public float currentInterval = 0f;
 
 	public bool hasPosition = false;
@@ -23,7 +23,7 @@ public class UserController : MonoBehaviour
 	private float startTime;
 	private float distance;
 
-	public bool shouldInterpolate = true;
+	public bool shouldInterpolate = false;
 
 	private static Vector3 positiveScale = new Vector3 (2, 2, 1);
 	private static Vector3 negativeScale = new Vector3 (-2, 2, 1);
@@ -47,7 +47,7 @@ public class UserController : MonoBehaviour
 		currentInterval += Time.deltaTime;
     }
 
-	void UpdatePosition(){
+	void UpdatePosition() {
 		position_x = gameObject.transform.position.x;
 		position_y = gameObject.transform.position.y;
         if (Input.GetAxis("Horizontal") != 0.00f||Input.GetAxis("Vertical") !=0.00f)

@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 	private float startTime;
 	private float distance;
 
-	public bool shouldInterpolate = true;
+	public bool shouldInterpolate = false;
     public int playerID;
 
     void Start()
