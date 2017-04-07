@@ -322,7 +322,7 @@ public class DGTRemote : MonoBehaviour
 			Debug.Log ("Bye bye player#" + id);
 			otherPlayer.SetActive (false);
 //			Destroy (otherPlayer);
-//			gameManager.players.Remove (id);
+			gameManager.players.Remove (id);
 		}
 	}
 
