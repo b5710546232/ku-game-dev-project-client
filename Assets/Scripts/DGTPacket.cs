@@ -236,7 +236,7 @@ class DGTPacket : PacketManager
 	private void RecvPlayersInfo(int packet_id, PacketReader pr)
 	{
 		if (DGTRemote.Instance.gameManager.owner_id >= 0) {
-			Debug.Log ("Already received id after logged in");
+//			Debug.Log ("Already received id after logged in");
 			int amount = pr.ReadUInt8 ();
 			Dictionary<int, ArrayList> playersInfo = new Dictionary<int, ArrayList> ();
 			for (int i = 0; i < amount; i++) {
@@ -254,7 +254,7 @@ class DGTPacket : PacketManager
 				DGTRemote.Instance.RecvPlayersInfo (playersInfo);
 			}
 		} else {
-			Debug.Log ("Before logged in");
+//			Debug.Log ("Before logged in");
 		}
 	}
 

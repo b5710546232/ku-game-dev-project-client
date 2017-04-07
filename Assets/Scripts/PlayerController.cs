@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
 	private float distance;
 
 	public bool shouldInterpolate = false;
-    public int playerID;
+//    public int playerID;
+	public int id = -1;
 
     void Start()
     {

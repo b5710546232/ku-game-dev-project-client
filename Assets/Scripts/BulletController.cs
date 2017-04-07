@@ -22,7 +22,19 @@ public class BulletController : MonoBehaviour {
 		if (owner != null) {
 			if (owner != col.gameObject) {
 				Debug.Log (string.Format ("Bullet of {0} hit {1}", owner.name, col.gameObject.name));
-				DGTRemote.Instance.RequestProjectileHit (id);
+				PlayerController hitPlayer = col.gameObject.GetComponent<PlayerController> ();
+				if (hitPlayer != null) {
+					int index = hitPlayer.id;
+					if (index >= 0) {
+						DGTRemote.Instance.RequestProjectileHit (index);
+					}
+				} else {
+					UserController hitClient = col.gameObject.GetComponent<UserController> ();
+					int index = hitClient.id;
+					if (index >= 0) {
+						DGTRemote.Instance.RequestProjectileHit (index);
+					}
+				}
 			}
 		}
 //		col.gameObject.GetComponent<

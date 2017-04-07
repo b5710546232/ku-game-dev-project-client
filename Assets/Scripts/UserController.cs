@@ -28,6 +28,8 @@ public class UserController : MonoBehaviour
 	private static Vector3 positiveScale = new Vector3 (2, 2, 1);
 	private static Vector3 negativeScale = new Vector3 (-2, 2, 1);
 
+	public int id = -1;
+
 	void Start()
     {
 

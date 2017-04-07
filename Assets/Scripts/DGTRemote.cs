@@ -288,12 +288,14 @@ public class DGTRemote : MonoBehaviour
 					player.name = "Client player#" + gameManager.owner_id.ToString();
 					UserController uc = player.AddComponent<UserController> ();
 					uc.serverPosition = position;
+					uc.id = playerInfo.Key;
 //					shouldInterpolate = uc.shouldInterpolate;
 				} else {
 					player.name = "Other player#" + playerInfo.Key.ToString();
 					PlayerController pc = player.AddComponent<PlayerController> ();
 					pc.serverPosition = position;
 //					shouldInterpolate = pc.shouldInterpolate;
+					pc.id = playerInfo.Key;
 				}
 //				SpriteRenderer sr = player.AddComponent<SpriteRenderer> ();
 //				sr.sprite = gameManager.playerSprite;
@@ -318,8 +320,9 @@ public class DGTRemote : MonoBehaviour
 		gameManager.players.TryGetValue (id, out otherPlayer);
 		if (otherPlayer != null) {
 			Debug.Log ("Bye bye player#" + id);
-			Destroy (otherPlayer);
-			gameManager.players.Remove (id);
+			otherPlayer.SetActive (false);
+//			Destroy (otherPlayer);
+//			gameManager.players.Remove (id);
 		}
 	}
 
