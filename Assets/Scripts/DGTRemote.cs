@@ -290,7 +290,22 @@ public class DGTRemote : MonoBehaviour
 				gameManager.players.Add (playerInfo.Key, player);
 			}
 			Debug.Log ("Update player's position");
+
+			UserController userController = player.GetComponent<UserController> ();
+			PlayerController playerController = player.GetComponent<PlayerController> ();
+
+
+			if (userController) {
+				userController.PlayAnimate (player.transform.position.x - position.x , player.transform.position.y - position.y);
+			}
+			if (playerController) {
+				playerController.PlayAnimate  (player.transform.position.x - position.x , player.transform.position.y - position.y);
+			}
+
+
+
 			player.transform.position = position;
+
 //			if (!shouldInterpolate) {
 //				player.transform.position = position;
 //			}

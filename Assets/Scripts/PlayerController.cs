@@ -18,10 +18,11 @@ public class PlayerController : MonoBehaviour
 
 	public bool shouldInterpolate = false;
     public int playerID;
+	Animator animator;
 
     void Start()
     {
-
+		animator = gameObject.GetComponent<Animator> ();
     }
 
     // Update is called once per frame
@@ -45,5 +46,14 @@ public class PlayerController : MonoBehaviour
 			gameObject.transform.position = Vector2.Lerp (startPosition, serverPosition, ratio);
 		}
 	}
-   
+	public void PlayAnimate(float posX, float posY){
+		if (animator) {
+			if (posX != 0 || posY != 0) {
+				animator.SetTrigger ("isWalking");
+			} else if (posX == 0 && posY == 0) {
+				animator.SetTrigger ("isIdle");
+			} else {
+			}
+		}
+	}
 }
