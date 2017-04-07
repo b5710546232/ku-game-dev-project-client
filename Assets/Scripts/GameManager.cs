@@ -50,8 +50,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         dgtMainController = DGTMainController.GetInstance();
-		DGTRemote gamestate = DGTRemote.GetInstance();
-        gamestate = DGTRemote.GetInstance();
+//		DGTRemote gamestate = DGTRemote.GetInstance();
+//        gamestate = DGTRemote.GetInstance();
     }
 
     void Start()

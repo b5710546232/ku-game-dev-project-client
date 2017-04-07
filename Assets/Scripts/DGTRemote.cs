@@ -140,6 +140,16 @@ public class DGTRemote : MonoBehaviour
 		_Packet.RequestSendBulletInfo (bulletDirection, bulletRotation);
 	}
 
+	public void RequestProjectileHit(int id)
+	{
+		_Packet.RequestProjectileHit (id);
+	}
+
+	///////////////////////////////////////////////////////////////////
+
+	///////////////////////////////////////////////////////////////////
+	// Receiving side
+
     public void recvQuestion()
     {
         _Packet.RequestAnswer();
@@ -326,6 +336,7 @@ public class DGTRemote : MonoBehaviour
 			//Should take a bullet from client's pool
 			GameObject bullet = Instantiate(gameManager.bulletPrefab, bulletHole.transform.position, bulletRotation);
 			bullet.GetComponent<BulletController> ().id = id;
+			bullet.GetComponent<BulletController> ().owner = gameManager.players [id];
 			bullet.GetComponent<Rigidbody2D> ().velocity = direction * gunCtrl.bulletSpeed;
 		}
 	}

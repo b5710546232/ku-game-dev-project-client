@@ -26,6 +26,7 @@ class DGTPacket : PacketManager
 		CS_PLAYERS_INFO = 10006,
 
 		CS_BULLET_INFO = 11002,
+		CS_PROJECTILE_HIT = 11003,
 
 
         SC_LOGGED_IN = 20001,
@@ -152,6 +153,14 @@ class DGTPacket : PacketManager
 		EndSend ();
 	}
 
+	public void RequestProjectileHit(int id)
+	{
+//		Debug.Log ("[Mock] Send <Projectile Hit> PACKET");
+		PacketWriter pw = BeginSend ((int)PacketId.CS_PROJECTILE_HIT);
+		pw.WriteUInt8 (id);
+		EndSend ();
+	}
+
     #endregion
 
     #region receive from server	
@@ -235,7 +244,7 @@ class DGTPacket : PacketManager
 				float x = pr.ReadFloat ();
 				float y = pr.ReadFloat ();
 				
-				Debug.Log (string.Format ("Id#{0} X#{1}, Y{2}", id, x, y));
+//				Debug.Log (string.Format ("Id#{0} X#{1}, Y{2}", id, x, y));
 				
 				ArrayList info = new ArrayList ();
 				info.Add (x);
