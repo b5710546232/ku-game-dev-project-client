@@ -29,10 +29,11 @@ public class UserController : MonoBehaviour
 	private static Vector3 negativeScale = new Vector3 (-2, 2, 1);
 
 	public int id = -1;
+	private Animator animator;
 
 	void Start()
     {
-
+		animator = gameObject.GetComponent<Animator> ();
     }
 
     // Update is called once per frame
@@ -48,6 +49,17 @@ public class UserController : MonoBehaviour
 //		currentInterval += ((int)Time.deltaTime * 1000) / 1000f;
 		currentInterval += Time.deltaTime;
     }
+
+	public void PlayAnimate(float posX, float posY){
+		if (animator) {
+			if (posX != 0 || posY != 0) {
+				animator.SetTrigger ("isWalking");
+			} else if (posX == 0 && posY == 0) {
+				animator.SetTrigger ("isIdle");
+			} else {
+			}
+		}
+	}
 
 	void UpdatePosition() {
 		position_x = gameObject.transform.position.x;
