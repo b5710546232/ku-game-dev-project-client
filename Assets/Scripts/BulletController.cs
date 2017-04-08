@@ -17,6 +17,11 @@ public class BulletController : MonoBehaviour {
 //	void Update () {
 //		
 //	}
+	public void resetTo(Vector3 pos){
+		transform.position = pos;
+		gameObject.SetActive(true);
+	}
+
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (owner != null) {
