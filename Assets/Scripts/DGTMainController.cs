@@ -37,8 +37,8 @@ public class DGTMainController : MonoBehaviour
 	
 	public IEnumerator ConnectToServer ()
 	{
-		string host = "139.59.127.218";
-		// string host = "localhost";
+//		string host = "139.59.127.218";
+		 string host = "localhost";
 //		string host = "192.168.1.3";
 		int port = 3456;
 		DGTPacket.Config pc = new DGTPacket.Config (host, port);

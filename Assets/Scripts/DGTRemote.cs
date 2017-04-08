@@ -266,6 +266,7 @@ public class DGTRemote : MonoBehaviour
 //			bool shouldInterpolate = false;
 			if (gameManager.players.ContainsKey (playerInfo.Key)) {
 				player = gameManager.players [playerInfo.Key];
+				player.SetActive (true);
 				if (gameManager.owner_id == playerInfo.Key) {
 					UserController uc = player.GetComponent<UserController> ();
 					uc.serverPosition = position;
@@ -337,7 +338,7 @@ public class DGTRemote : MonoBehaviour
 			Debug.Log ("Bye bye player#" + id);
 			otherPlayer.SetActive (false);
 //			Destroy (otherPlayer);
-			gameManager.players.Remove (id);
+//			gameManager.players.Remove (id);
 		}
 	}
 
