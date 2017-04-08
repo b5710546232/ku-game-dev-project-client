@@ -17,17 +17,17 @@ public class Logincontrol : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyUp(KeyCode.Space)){
+		if (ControlFreak2.CF2Input.GetKeyUp(KeyCode.Space)){
             Instantiate(bullet, player.transform.position, Quaternion.identity);
         }
-        if (Input.GetKeyUp(KeyCode.LeftArrow)) {
+        if (ControlFreak2.CF2Input.GetKeyUp(KeyCode.LeftArrow)) {
             player.transform.localRotation = Quaternion.Euler(0, 180, 0);
         }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        if (ControlFreak2.CF2Input.GetKeyUp(KeyCode.RightArrow))
         {
             player.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
-        if (Input.GetKeyUp(KeyCode.UpArrow))
+        if (ControlFreak2.CF2Input.GetKeyUp(KeyCode.UpArrow))
         {
             if (npoint > 0)
             {
@@ -36,7 +36,7 @@ public class Logincontrol : MonoBehaviour {
             }
              
         }
-        if (Input.GetKeyUp(KeyCode.DownArrow))
+        if (ControlFreak2.CF2Input.GetKeyUp(KeyCode.DownArrow))
         {
             if (npoint < 2)
             {
