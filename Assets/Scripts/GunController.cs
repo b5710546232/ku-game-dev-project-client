@@ -17,14 +17,6 @@ public class GunController : MonoBehaviour {
 	public bool isClient = false;
 	Quaternion rotation;
 
-	void Awake()
-	{
-		rotation = transform.rotation;
-	}
-	void LateUpdate()
-	{
-		transform.rotation = rotation;
-	}
 	// Use this for initialization
 //	void Start () {}
 	
