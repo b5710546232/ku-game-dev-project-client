@@ -23,6 +23,26 @@ public class BulletPoolController : MonoBehaviour {
 		// }
 	}
 
+	public GameObject init(Vector3 position,Quaternion quaternion){
+
+		foreach(GameObject item in pools){
+			if(!item.activeInHierarchy){
+
+				BulletController bullet = item.GetComponent<BulletController>();
+				bullet.resetTo(position,quaternion);
+				return item;
+			}
+		}
+		
+
+		GameObject _bullet = Instantiate(bullet,position, quaternion);
+		pools.Add(_bullet);
+
+
+		return  _bullet;
+
+
+	}
 	public GameObject init(Vector3 position){
 
 		foreach(GameObject item in pools){

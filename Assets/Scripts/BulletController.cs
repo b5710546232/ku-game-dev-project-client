@@ -22,6 +22,12 @@ public class BulletController : MonoBehaviour {
 		gameObject.SetActive(true);
 	}
 
+	public void resetTo(Vector3 pos,Quaternion qua){
+		transform.position = pos;
+		transform.rotation = qua;
+		gameObject.SetActive(true);
+	}
+
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (owner != null) {

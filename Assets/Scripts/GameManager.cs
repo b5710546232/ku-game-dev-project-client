@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
 	// Explicity chose bullet's prefab
 	public GameObject bulletPrefab;
 
+    public GameObject bulletPool;
+
     public static GameManager GetInstance()
     {
         if (g_instance == null)

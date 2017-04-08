@@ -352,7 +352,10 @@ public class DGTRemote : MonoBehaviour
 			Quaternion bulletRotation = Quaternion.Euler (0, 0, Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg + 180);
 			//Make a bullet or take from bullet pool
 			//Should take a bullet from client's pool
-			GameObject bullet = Instantiate(gameManager.bulletPrefab, bulletHole.transform.position, bulletRotation);
+			// GameObject bullet = Instantiate(gameManager.bulletPrefab, bulletHole.transform.position, bulletRotation);
+            GameObject bullet = gameManager.bulletPool.GetComponent<BulletPoolController>()
+                            .init(bulletHole.transform.position,bulletRotation);
+            
 			bullet.GetComponent<BulletController> ().id = id;
 			bullet.GetComponent<BulletController> ().owner = gameManager.players [id];
 			bullet.GetComponent<Rigidbody2D> ().velocity = direction * gunCtrl.bulletSpeed;
