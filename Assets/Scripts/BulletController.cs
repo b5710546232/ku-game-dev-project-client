@@ -8,15 +8,38 @@ public class BulletController : MonoBehaviour {
 
 	public GameObject owner;
 
+	public float lifeTimeLimit = 1f;
+	public float lifeTimeStart;
+
+
 	// Use this for initialization
-//	void Start () {
-//		
-//	}
+	void Start () {
+		lifeTimeStart = Time.time;	
+
+	}
 	
 	// Update is called once per frame
-//	void Update () {
-//		
-//	}
+	void Update () {
+		Debug.Log(Time.time - lifeTimeStart);
+		if(Time.time - lifeTimeStart > lifeTimeLimit){
+			gameObject.SetActive(false);
+		}	
+	}
+	public void resetTo(Vector3 pos){
+		lifeTimeStart = Time.time;
+		transform.position = pos;
+		gameObject.SetActive(true);
+	}
+
+
+
+	public void resetTo(Vector3 pos,Quaternion qua){
+		lifeTimeStart = Time.time;
+		transform.position = pos;
+		transform.rotation = qua;
+		gameObject.SetActive(true);
+	}
+
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (owner != null) {
@@ -27,12 +50,14 @@ public class BulletController : MonoBehaviour {
 					int index = hitPlayer.id;
 					if (index >= 0) {
 						DGTRemote.Instance.RequestProjectileHit (index);
+						gameObject.SetActive(false);
 					}
 				} else {
 					UserController hitClient = col.gameObject.GetComponent<UserController> ();
 					int index = hitClient.id;
 					if (index >= 0) {
 						DGTRemote.Instance.RequestProjectileHit (index);
+						gameObject.SetActive(false);
 					}
 				}
 			}
