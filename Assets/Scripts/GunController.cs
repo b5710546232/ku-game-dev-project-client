@@ -31,8 +31,8 @@ public class GunController : MonoBehaviour {
 	}
 
 	private void Shoot() {
-		if (Input.GetMouseButton (0)) {
-			Vector2 target = Camera.main.ScreenToWorldPoint (new Vector2 (Input.mousePosition.x, Input.mousePosition.y));
+		if (ControlFreak2.CF2Input.GetMouseButton (0)) {
+			Vector2 target = Camera.main.ScreenToWorldPoint (new Vector2 (ControlFreak2.CF2Input.mousePosition.x, ControlFreak2.CF2Input.mousePosition.y));
 			Vector2 direction = (target - (Vector2)bulletHole.transform.position);
 			direction.Normalize ();
 			Quaternion bulletRotation = Quaternion.Euler (0, 0, Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg + 180);
@@ -45,7 +45,7 @@ public class GunController : MonoBehaviour {
 
 	private void TurnGun() {
 //		Vector2 mouseScreenPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) ;
-		Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint (transform.position);
+		Vector3 dir = ControlFreak2.CF2Input.mousePosition - Camera.main.WorldToScreenPoint (transform.position);
 		float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
 		Flip ();
@@ -53,12 +53,12 @@ public class GunController : MonoBehaviour {
 	}
 
 	private void Flip() {
-		if (Input.GetAxis("Horizontal") < -0.1f)
+		if (ControlFreak2.CF2Input.GetAxis("Horizontal") < -0.1f)
 		{
 //			this.GetComponent<SpriteRenderer> ().flipY = true;
 			transform.localScale = negativeScale;
 		}
-		if (Input.GetAxis("Horizontal") > 0.1f)
+		if (ControlFreak2.CF2Input.GetAxis("Horizontal") > 0.1f)
 		{
 //			this.GetComponent<SpriteRenderer> ().flipY = false;
 			transform.localScale = positiveScale;

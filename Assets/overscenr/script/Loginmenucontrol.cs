@@ -15,11 +15,11 @@ public class Loginmenucontrol : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        if (ControlFreak2.CF2Input.GetKeyUp(KeyCode.LeftArrow))
         {
             anim.Play("menuMovedown");
         }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        if (ControlFreak2.CF2Input.GetKeyUp(KeyCode.RightArrow))
         {
             anim.Play("menuMoveup");
         }

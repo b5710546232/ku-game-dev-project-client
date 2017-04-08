@@ -64,14 +64,14 @@ public class UserController : MonoBehaviour
 	void UpdatePosition() {
 		position_x = gameObject.transform.position.x;
 		position_y = gameObject.transform.position.y;
-        if (Input.GetAxis("Horizontal") != 0.00f||Input.GetAxis("Vertical") !=0.00f)
+        if (ControlFreak2.CF2Input.GetAxis("Horizontal") != 0.00f||ControlFreak2.CF2Input.GetAxis("Vertical") !=0.00f)
 		DGTRemote.GetInstance ().RequestMovementPlayer(position_x,position_y);
 	}
 
     void Controller()
     {
-		float h = Input.GetAxis ("Horizontal");
-		float v = Input.GetAxis ("Vertical");
+		float h = ControlFreak2.CF2Input.GetAxis ("Horizontal");
+		float v = ControlFreak2.CF2Input.GetAxis ("Vertical");
 //		Debug.Log (string.Format ("h:{0}, v:{1}", h, v));
 		Flip();
 		DGTRemote.Instance.RequestInputAxes (h, v);
@@ -93,11 +93,11 @@ public class UserController : MonoBehaviour
 
     void PlayerFlip()
     {
-        if (Input.GetAxis("Horizontal") < -0.1f)
+        if (ControlFreak2.CF2Input.GetAxis("Horizontal") < -0.1f)
         {
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
         }
-        if (Input.GetAxis("Horizontal") > 0.1f)
+        if (ControlFreak2.CF2Input.GetAxis("Horizontal") > 0.1f)
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
         }
@@ -105,11 +105,11 @@ public class UserController : MonoBehaviour
 
 	private void Flip()
 	{
-		if (Input.GetAxis("Horizontal") < -0.1f)
+		if (ControlFreak2.CF2Input.GetAxis("Horizontal") < -0.1f)
 		{
 			transform.localScale = negativeScale;
 		}
-		if (Input.GetAxis("Horizontal") > 0.1f)
+		if (ControlFreak2.CF2Input.GetAxis("Horizontal") > 0.1f)
 		{
 			transform.localScale = positiveScale;
 		}

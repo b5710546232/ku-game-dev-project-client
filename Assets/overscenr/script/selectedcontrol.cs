@@ -17,7 +17,7 @@ public class selectedcontrol : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.LeftArrow)|| Input.GetKeyUp(KeyCode.RightArrow))
+        if (ControlFreak2.CF2Input.GetKeyUp(KeyCode.LeftArrow)|| ControlFreak2.CF2Input.GetKeyUp(KeyCode.RightArrow))
         {
             anim.Stop();
             
