@@ -2,10 +2,15 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 public class DGTMainController : MonoBehaviour
 {
 	public Text m_chat;
 	public InputField m_inputText;
+
+	private static DGTMainController g_instance;
+
+	private static GameObject gameObjectState;
 
 	void Update ()
 	{
@@ -15,13 +20,28 @@ public class DGTMainController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		Application.runInBackground = true;
 		DontDestroyOnLoad(this);
 		StartCoroutine (ConnectToServer ());
+		
+	}
+
+	public static DGTMainController GetInstance() { 
+		if(g_instance ==null){
+			gameObjectState = new GameObject("DGTMainController");
+			g_instance = gameObjectState.AddComponent<DGTMainController>();
+			DontDestroyOnLoad(gameObjectState);
+		}
+		return g_instance;
 	}
 	
 	public IEnumerator ConnectToServer ()
 	{
-		DGTPacket.Config pc = new DGTPacket.Config ("localhost", 3456);
+		string host = "139.59.127.218";
+		// string host = "localhost";
+//		string host = "192.168.1.3";
+		int port = 3456;
+		DGTPacket.Config pc = new DGTPacket.Config (host, port);
 		DGTRemote.resetGameState ();
 		DGTRemote gamestate = DGTRemote.GetInstance ();
 		gamestate.Connect (pc.host, pc.port);
@@ -44,14 +64,14 @@ public class DGTMainController : MonoBehaviour
 			// send login
 			gamestate.RequestLogin ();
 			gamestate.mainController = this;
-			SceneManager.LoadScene("PlayScene");
+			// SceneManager.LoadScene("PlayScene");
 			
 			
 		} else {
 			yield return new WaitForSeconds (5f);
 			Debug.Log ("Cannot connect");
 		}
-		StartCoroutine(PingTest());
+		// StartCoroutine(PingTest());
 		yield break;
 	}
 	
@@ -63,6 +83,12 @@ public class DGTMainController : MonoBehaviour
 			i++;
 			yield return new WaitForSeconds(3);
 		}
+	}
+
+
+	void OnApplicationQuit()
+	{
+		DGTRemote.GetInstance ().Disconnect();
 	}
 
 	public void sendChat()
