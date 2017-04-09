@@ -20,7 +20,6 @@ public class BulletController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//Debug.Log(Time.time - lifeTimeStart);
 		if(Time.time - lifeTimeStart > lifeTimeLimit){
 			gameObject.SetActive(false);
 		}	
@@ -53,6 +52,7 @@ public class BulletController : MonoBehaviour {
 						gameObject.SetActive(false);
 					}
 				} else {
+					Debug.Log (string.Format ("Bullet of {0} hit {1}", owner.name, col.gameObject.name));
 					UserController hitClient = col.gameObject.GetComponent<UserController> ();
 					int index = hitClient.id;
 					if (index >= 0) {

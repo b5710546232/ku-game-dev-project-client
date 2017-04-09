@@ -28,7 +28,8 @@ public class GameManager : MonoBehaviour
 	// Explicitly chosen player's sprite
 //	public Sprite playerSprite;
 	// Explicitly chose player's prefab
-	public GameObject playerPrefab;
+	public GameObject clientPlayerPrefab;
+    public GameObject otherPlayerPrefab;
 
 	// Explicitly chosen gun's sprite
 //	public Sprite gunSprite;
