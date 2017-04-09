@@ -15,6 +15,7 @@ public class GunController : MonoBehaviour {
 	private static Vector3 negativeScale = new Vector3 (-1, 1, 1);
 
 	public bool isClient = false;
+	Quaternion rotation;
 
 	// Use this for initialization
 //	void Start () {}
@@ -55,12 +56,12 @@ public class GunController : MonoBehaviour {
 	private void Flip() {
 		if (ControlFreak2.CF2Input.GetAxis("Horizontal") < -0.1f)
 		{
-//			this.GetComponent<SpriteRenderer> ().flipY = true;
+			//this.GetComponent<SpriteRenderer> ().flipY = true;
 			transform.localScale = negativeScale;
 		}
 		if (ControlFreak2.CF2Input.GetAxis("Horizontal") > 0.1f)
 		{
-//			this.GetComponent<SpriteRenderer> ().flipY = false;
+			//this.GetComponent<SpriteRenderer> ().flipY = false;
 			transform.localScale = positiveScale;
 		}
 	}
