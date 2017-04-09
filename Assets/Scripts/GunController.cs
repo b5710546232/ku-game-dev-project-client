@@ -6,6 +6,9 @@ public class GunController : MonoBehaviour {
 
 	public GameObject bulletHole;
 	public GameObject bulletPrefab;
+	public GameObject arm;
+
+	public AudioClip shootingSound;
 
 	public float bulletSpeed = 2f;
 	public float shootInterval = 1f;
@@ -33,6 +36,8 @@ public class GunController : MonoBehaviour {
 
 	private void Shoot() {
 		if (ControlFreak2.CF2Input.GetMouseButton (0)) {
+			AudioSource.PlayClipAtPoint (shootingSound , this.transform.position);
+			arm.GetComponent<ArmController> ().ShootAnimation ();
 			Vector2 target = Camera.main.ScreenToWorldPoint (new Vector2 (ControlFreak2.CF2Input.mousePosition.x, ControlFreak2.CF2Input.mousePosition.y));
 			Vector2 direction = (target - (Vector2)bulletHole.transform.position);
 			direction.Normalize ();
