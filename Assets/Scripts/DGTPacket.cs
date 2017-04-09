@@ -27,7 +27,7 @@ class DGTPacket : PacketManager
 
 		CS_BULLET_INFO = 11002,
 		CS_PROJECTILE_HIT = 11003,
-
+		CS_PLAYER_RESPAWN = 11004,
 
         SC_LOGGED_IN = 20001,
         SC_PING_SUCCESS = 20002,
@@ -161,6 +161,12 @@ class DGTPacket : PacketManager
 		EndSend ();
 	}
 
+	public void RequestRespawn()
+	{
+		BeginSend ((int)PacketId.CS_PLAYER_RESPAWN);
+		EndSend ();
+	}
+
     #endregion
 
     #region receive from server	
@@ -243,7 +249,7 @@ class DGTPacket : PacketManager
 				int id = pr.ReadUInt8 ();
 				float x = pr.ReadFloat ();
 				float y = pr.ReadFloat ();
-				
+				int health = pr.ReadUInt16 ();
 //				Debug.Log (string.Format ("Id#{0} X#{1}, Y{2}", id, x, y));
 				
 				ArrayList info = new ArrayList ();

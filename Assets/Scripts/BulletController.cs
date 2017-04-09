@@ -41,9 +41,11 @@ public class BulletController : MonoBehaviour {
 
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if (owner != null) {
-			if (owner != col.gameObject) {
-				Debug.Log (string.Format ("Bullet of {0} hit {1}", owner.name, col.gameObject.name));
+		GameObject client = DGTRemote.Instance.gameManager.client;
+		if (owner != null && client != null && owner != col.gameObject) {
+//			if (owner != col.gameObject ) {
+			Debug.Log (string.Format ("Bullet of {0} hit {1}", owner.name, col.gameObject.name));
+			if (owner == client) {
 				PlayerController hitPlayer = col.gameObject.GetComponent<PlayerController> ();
 				if (hitPlayer != null) {
 					int index = hitPlayer.id;
@@ -51,16 +53,25 @@ public class BulletController : MonoBehaviour {
 						DGTRemote.Instance.RequestProjectileHit (index);
 						gameObject.SetActive(false);
 					}
-				} else {
-					Debug.Log (string.Format ("Bullet of {0} hit {1}", owner.name, col.gameObject.name));
-					UserController hitClient = col.gameObject.GetComponent<UserController> ();
-					int index = hitClient.id;
-					if (index >= 0) {
-						DGTRemote.Instance.RequestProjectileHit (index);
-						gameObject.SetActive(false);
-					}
 				}
 			}
+//				PlayerController hitPlayer = col.gameObject.GetComponent<PlayerController> ();
+//				if (hitPlayer != null) {
+//					int index = hitPlayer.id;
+//					if (index >= 0) {
+//						DGTRemote.Instance.RequestProjectileHit (index);
+//						gameObject.SetActive(false);
+//					}
+//				} else {
+//					Debug.Log (string.Format ("Bullet of {0} hit {1}", owner.name, col.gameObject.name));
+//					UserController hitClient = col.gameObject.GetComponent<UserController> ();
+//					int index = hitClient.id;
+//					if (index >= 0) {
+//						DGTRemote.Instance.RequestProjectileHit (index);
+//						gameObject.SetActive(false);
+//					}
+//				}
+//			}
 		}
 //		col.gameObject.GetComponent<
 ////		Debug.Log (string.Format ("Client#{0}, BulletOf#{1}", DGTRemote.Instance.gameManager.owner_id, id));
