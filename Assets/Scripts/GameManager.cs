@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
 
     public GameObject bulletPool;
 
+	public GameObject deadScreenPrefab;
+	public GameObject deadScreen;
+
+	public GameObject client;
+
     public static GameManager GetInstance()
     {
         if (g_instance == null)
@@ -53,6 +58,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         dgtMainController = DGTMainController.GetInstance();
+		deadScreen = Instantiate (deadScreenPrefab);
+		deadScreen.SetActive (false);
 //		DGTRemote gamestate = DGTRemote.GetInstance();
 //        gamestate = DGTRemote.GetInstance();
     }

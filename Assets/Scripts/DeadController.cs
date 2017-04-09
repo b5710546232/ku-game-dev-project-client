@@ -19,4 +19,10 @@ public class DeadController : MonoBehaviour {
 		this.gameObject.SetActive (false);
 	}
 
+	public void RequestRespawn() {
+		Debug.Log ("Requesting respawn...");
+		DGTRemote.Instance.RequestRespawn ();
+		PlayerRespawn ();
+	}
+
 }

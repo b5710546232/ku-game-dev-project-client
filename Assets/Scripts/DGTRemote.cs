@@ -145,6 +145,11 @@ public class DGTRemote : MonoBehaviour
 		_Packet.RequestProjectileHit (id);
 	}
 
+	public void RequestRespawn()
+	{
+		_Packet.RequestRespawn ();
+	}
+
 	///////////////////////////////////////////////////////////////////
 
 	///////////////////////////////////////////////////////////////////
@@ -269,8 +274,9 @@ public class DGTRemote : MonoBehaviour
 				player.SetActive (true);
 				if (gameManager.owner_id == playerInfo.Key) {
 					UserController uc = player.GetComponent<UserController> ();
+					gameManager.deadScreen.SetActive (false);
 					uc.serverPosition = position;
-                    PlayerController pc = player.GetComponent<PlayerController> ();
+//                    PlayerController pc = player.GetComponent<PlayerController> ();
 //					uc.hasPosition = true;
 //					shouldInterpolate = uc.shouldInterpolate; 
 //					uc.startInterpolate ();
@@ -293,7 +299,7 @@ public class DGTRemote : MonoBehaviour
                     
 					uc.serverPosition = position;
 					uc.id = playerInfo.Key;
-
+					gameManager.client = player;
 //					shouldInterpolate = uc.shouldInterpolate;
 				} else {
                     player = Instantiate (gameManager.otherPlayerPrefab);
@@ -340,10 +346,15 @@ public class DGTRemote : MonoBehaviour
 		GameObject otherPlayer;
 		gameManager.players.TryGetValue (id, out otherPlayer);
 		if (otherPlayer != null) {
-			Debug.Log ("Bye bye player#" + id);
+			Debug.Log ("Player#" + id + " has died.");
 			otherPlayer.SetActive (false);
-//			Destroy (otherPlayer);
-//			gameManager.players.Remove (id);
+			if (DGTRemote.Instance.gameManager.owner_id == id) {
+				GameObject deadScreen = gameManager.deadScreen;
+				if (deadScreen == null) {
+					gameManager.deadScreen = Instantiate (gameManager.deadScreenPrefab);
+				}
+				deadScreen.SetActive (true);
+			}
 		}
 	}
 
@@ -356,7 +367,7 @@ public class DGTRemote : MonoBehaviour
 			GameObject bulletHole = gunCtrl.bulletHole;
 
             //play anim
-             gunCtrl.arm.GetComponent<ArmController> ().ShootAnimation ();
+            gunCtrl.arm.GetComponent<ArmController> ().ShootAnimation ();
 
 			Quaternion bulletRotation = Quaternion.Euler (0, 0, Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg + 180);
 			//Make a bullet or take from bullet pool
