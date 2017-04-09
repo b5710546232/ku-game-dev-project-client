@@ -20,7 +20,7 @@ public class BulletController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(Time.time - lifeTimeStart);
+		//Debug.Log(Time.time - lifeTimeStart);
 		if(Time.time - lifeTimeStart > lifeTimeLimit){
 			gameObject.SetActive(false);
 		}	
