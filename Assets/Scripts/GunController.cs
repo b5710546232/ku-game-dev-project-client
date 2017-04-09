@@ -6,6 +6,7 @@ public class GunController : MonoBehaviour {
 
 	public GameObject bulletHole;
 	public GameObject bulletPrefab;
+	public GameObject arm;
 
 	public AudioClip shootingSound;
 
@@ -17,6 +18,7 @@ public class GunController : MonoBehaviour {
 	private static Vector3 negativeScale = new Vector3 (-1, 1, 1);
 
 	public bool isClient = false;
+	Quaternion rotation;
 
 	// Use this for initialization
 //	void Start () {}
@@ -34,7 +36,12 @@ public class GunController : MonoBehaviour {
 
 	private void Shoot() {
 		if (ControlFreak2.CF2Input.GetMouseButton (0)) {
-			AudioSource.PlayClipAtPoint (shootingSound,this.transform.position);
+			AudioSource.PlayClipAtPoint (shootingSound , this.transform.position);
+
+			// move to dgt-remote
+			// arm.GetComponent<ArmController> ().ShootAnimation ();
+
+
 			Vector2 target = Camera.main.ScreenToWorldPoint (new Vector2 (ControlFreak2.CF2Input.mousePosition.x, ControlFreak2.CF2Input.mousePosition.y));
 			Vector2 direction = (target - (Vector2)bulletHole.transform.position);
 			direction.Normalize ();
@@ -58,12 +65,12 @@ public class GunController : MonoBehaviour {
 	private void Flip() {
 		if (ControlFreak2.CF2Input.GetAxis("Horizontal") < -0.1f)
 		{
-//			this.GetComponent<SpriteRenderer> ().flipY = true;
+			//this.GetComponent<SpriteRenderer> ().flipY = true;
 			transform.localScale = negativeScale;
 		}
 		if (ControlFreak2.CF2Input.GetAxis("Horizontal") > 0.1f)
 		{
-//			this.GetComponent<SpriteRenderer> ().flipY = false;
+			//this.GetComponent<SpriteRenderer> ().flipY = false;
 			transform.localScale = positiveScale;
 		}
 	}

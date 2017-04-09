@@ -366,6 +366,9 @@ public class DGTRemote : MonoBehaviour
 			GunController gunCtrl = player.GetComponentInChildren<GunController> ();
 			GameObject bulletHole = gunCtrl.bulletHole;
 
+            //play anim
+            gunCtrl.arm.GetComponent<ArmController> ().ShootAnimation ();
+
 			Quaternion bulletRotation = Quaternion.Euler (0, 0, Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg + 180);
 			//Make a bullet or take from bullet pool
 			//Should take a bullet from client's pool
