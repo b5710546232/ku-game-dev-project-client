@@ -353,6 +353,11 @@ public class DGTRemote : MonoBehaviour
 			Debug.Log (string.Format ("Player#{0} shot a bullet", id));
 			GameObject player = gameManager.players [id];
 			GunController gunCtrl = player.GetComponentInChildren<GunController> ();
+
+
+            gunCtrl.arm.GetComponent<ArmController> ().ShootAnimation ();
+
+            
 			GameObject bulletHole = gunCtrl.bulletHole;
 
 			Quaternion bulletRotation = Quaternion.Euler (0, 0, Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg + 180);
