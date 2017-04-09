@@ -6,6 +6,7 @@ public class UserController : MonoBehaviour
 {
 
     // Use this for initialization
+	const float PLAYER_SIZE = 1f;
     Vector2 moveDirection;
     public float jumpSpeed;
     
@@ -25,15 +26,17 @@ public class UserController : MonoBehaviour
 
 	public bool shouldInterpolate = false;
 
-	private static Vector3 positiveScale = new Vector3 (2, 2, 1);
-	private static Vector3 negativeScale = new Vector3 (-2, 2, 1);
+	private static Vector3 positiveScale = new Vector3 (PLAYER_SIZE, PLAYER_SIZE, 1);
+	private static Vector3 negativeScale = new Vector3 (-PLAYER_SIZE, PLAYER_SIZE, 1);
 
 	public int id = -1;
 	private Animator animator;
 
+	public GameObject player;
+
 	void Start()
     {
-		animator = gameObject.GetComponent<Animator> ();
+		animator = player.gameObject.GetComponent<Animator> ();
     }
 
     // Update is called once per frame
@@ -62,8 +65,8 @@ public class UserController : MonoBehaviour
 	}
 
 	void UpdatePosition() {
-		position_x = gameObject.transform.position.x;
-		position_y = gameObject.transform.position.y;
+		position_x = player.gameObject.transform.position.x;
+		position_y = player.gameObject.transform.position.y;
         if (ControlFreak2.CF2Input.GetAxis("Horizontal") != 0.00f||ControlFreak2.CF2Input.GetAxis("Vertical") !=0.00f)
 		DGTRemote.GetInstance ().RequestMovementPlayer(position_x,position_y);
 	}
@@ -88,18 +91,18 @@ public class UserController : MonoBehaviour
 
     public void Move(Vector2 direction)
     {
-        gameObject.transform.Translate(direction.normalized * speed * Time.deltaTime);
+        player.gameObject.transform.Translate(direction.normalized * speed * Time.deltaTime);
     }
 
     void PlayerFlip()
     {
         if (ControlFreak2.CF2Input.GetAxis("Horizontal") < -0.1f)
         {
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
+            player.transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
         }
         if (ControlFreak2.CF2Input.GetAxis("Horizontal") > 0.1f)
         {
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
+            player.transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
         }
     }
 
@@ -107,17 +110,17 @@ public class UserController : MonoBehaviour
 	{
 		if (ControlFreak2.CF2Input.GetAxis("Horizontal") < -0.1f)
 		{
-			transform.localScale = negativeScale;
+			player.transform.localScale = negativeScale;
 		}
 		if (ControlFreak2.CF2Input.GetAxis("Horizontal") > 0.1f)
 		{
-			transform.localScale = positiveScale;
+			player.transform.localScale = positiveScale;
 		}
 	}
 
 	public void startInterpolate() {
 		startTime = Time.time;
-		startPosition = gameObject.transform.position;
+		startPosition = player.gameObject.transform.position;
 		distance = Vector2.Distance (startPosition, serverPosition);
 	}
 
@@ -125,7 +128,7 @@ public class UserController : MonoBehaviour
 		if (distance > 0) {
 			float covered = (Time.time - startTime) * speed;
 			float ratio = covered / distance;
-			gameObject.transform.position = Vector2.Lerp (startPosition, serverPosition, ratio);
+			player.gameObject.transform.position = Vector2.Lerp (startPosition, serverPosition, ratio);
 		}
 	}
 }

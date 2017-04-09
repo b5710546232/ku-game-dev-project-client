@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 
     // Use this for initialization
     Vector2 moveDirection;
+
+	public GameObject player;
     public float jumpSpeed;
     private float speed = 5;
 

@@ -270,6 +270,7 @@ public class DGTRemote : MonoBehaviour
 				if (gameManager.owner_id == playerInfo.Key) {
 					UserController uc = player.GetComponent<UserController> ();
 					uc.serverPosition = position;
+                    PlayerController pc = player.GetComponent<PlayerController> ();
 //					uc.hasPosition = true;
 //					shouldInterpolate = uc.shouldInterpolate; 
 //					uc.startInterpolate ();
@@ -282,16 +283,20 @@ public class DGTRemote : MonoBehaviour
 					//pc.startInterpolate();
 				}
 			} else {
-//				player = new GameObject ();
-				player = Instantiate (gameManager.playerPrefab);
+				// player = new GameObject ();
+				
 				if (gameManager.owner_id == playerInfo.Key) {
+                    player = Instantiate (gameManager.clientPlayerPrefab);
 					player.GetComponentInChildren<GunController> ().isClient = true;
 					player.name = "Client player#" + gameManager.owner_id.ToString();
-					UserController uc = player.AddComponent<UserController> ();
+					UserController uc = player.GetComponent<UserController> ();
+                    
 					uc.serverPosition = position;
 					uc.id = playerInfo.Key;
+
 //					shouldInterpolate = uc.shouldInterpolate;
 				} else {
+                    player = Instantiate (gameManager.otherPlayerPrefab);
 					player.name = "Other player#" + playerInfo.Key.ToString();
 					PlayerController pc = player.AddComponent<PlayerController> ();
 					pc.serverPosition = position;
